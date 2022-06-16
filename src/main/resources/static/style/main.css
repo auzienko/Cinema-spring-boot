@@ -1,0 +1,97 @@
+form {
+    width: 400px;
+    margin: auto
+}
+
+input, select {
+    width: 400px;
+    padding: 16px;
+    margin: 5px 0 25px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+}
+
+input:focus, select:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+}
+
+.container {
+    padding: 16px;
+}
+
+.btn {
+    background-color: #d5a037;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 400px;
+    opacity: 0.9;
+}
+
+.btn:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.column_main_wrapper {float:left; width:100%;}
+.column_main {margin:0 15% 0 15%; min-height:1px;}
+.column_left {float:left; margin-left:-100%; min-height:1px; width:15%;}
+.column_right {float:left; margin-left:-15%; min-height:1px; width:15%;}
+.columns:after {clear:both; content:''; display:block;}
+
+table.minimalistBlack {
+    border: 3px solid #000000;
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+}
+table.minimalistBlack td, table.minimalistBlack th {
+    border: 1px solid #000000;
+    padding: 5px 4px;
+}
+table.minimalistBlack tbody td {
+    font-size: 13px;
+}
+table.minimalistBlack thead {
+    background: #D5A037;
+    background: -moz-linear-gradient(top, #dfb869 0%, #d9a94b 66%, #D5A037 100%);
+    background: -webkit-linear-gradient(top, #dfb869 0%, #d9a94b 66%, #D5A037 100%);
+    background: linear-gradient(to bottom, #dfb869 0%, #d9a94b 66%, #D5A037 100%);
+    border-bottom: 3px solid #000000;
+}
+table.minimalistBlack thead th {
+    font-size: 15px;
+    font-weight: bold;
+    color: #000000;
+    text-align: left;
+}
+table.minimalistBlack tfoot {
+    font-size: 14px;
+    font-weight: bold;
+    color: #000000;
+    border-top: 3px solid #000000;
+}
+table.minimalistBlack tfoot td {
+    font-size: 14px;
+}
+
+div.searchItem {
+    padding: 15px;
+    float: left;
+    background: #D5A037;
+    background: -moz-linear-gradient(top, #dfb869 0%, #d9a94b 66%, #D5A037 100%);
+    background: -webkit-linear-gradient(top, #dfb869 0%, #d9a94b 66%, #D5A037 100%);
+    background: linear-gradient(to bottom, #dfb869 0%, #d9a94b 66%, #D5A037 100%);
+    color: white;
+    margin-right: 15px;
+    text-align: center;
+}
