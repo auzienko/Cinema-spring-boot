@@ -1,10 +1,11 @@
 package edu.school21.cinema.repositories;
 
 import edu.school21.cinema.models.Administrator;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-
-public interface AdministratorRepository extends CrudRepository<Administrator, Long> {
+@Repository
+public interface AdministratorRepository extends JpaRepository<Administrator, Long> {
     Optional<Administrator> findByEmailIgnoreCase(String email);
 }

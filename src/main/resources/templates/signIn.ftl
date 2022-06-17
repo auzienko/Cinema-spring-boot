@@ -1,6 +1,7 @@
 <#import "ui.ftl" as ui/>
 <@ui.header title="👤 Sign In"/>
-<form method="post" action="signin">
+<form method="post" action="/signIn">
+    <input name="${(_csrf.parameterName)!}" value="${(_csrf.token)!}" type="hidden" />
     <div class="container">
         <table>
             <tr>

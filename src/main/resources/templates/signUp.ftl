@@ -1,8 +1,12 @@
 <#import "ui.ftl" as ui/>
 <@ui.header title="👤 Sign Up"/>
-<form method="post" action="signup">
+<form method="post" action="/signUp">
+    <input name="${(_csrf.parameterName)!}" value="${(_csrf.token)!}" type="hidden" />
     <div class="container">
         <table>
+            <tr>
+                <td><input name="username" placeholder="Username" type="text" required/></td>
+            </tr>
             <tr>
                 <td><input name="email" placeholder="Email" type="text" required/></td>
             </tr>

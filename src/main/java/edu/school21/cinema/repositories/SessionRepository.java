@@ -1,10 +1,10 @@
 package edu.school21.cinema.repositories;
 
 import edu.school21.cinema.models.Session;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface SessionRepository extends CrudRepository<Session, Long> {
+public interface SessionRepository extends JpaRepository<Session, Long> {
     List<Session> findByMovie_TitleIgnoreCase(String title);
 }

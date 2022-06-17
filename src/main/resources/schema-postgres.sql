@@ -1,3 +1,12 @@
+CREATE TABLE IF NOT EXISTS cinema_users
+(
+    id               BIGSERIAL PRIMARY KEY,
+    username         VARCHAR,
+    email            VARCHAR,
+    password         VARCHAR,
+    role             int
+);
+
 CREATE TABLE IF NOT EXISTS administrators
 (
     id               BIGSERIAL PRIMARY KEY,
