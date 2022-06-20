@@ -15,6 +15,7 @@ public class CinemaFreeMarkerConfig {
         viewResolver.setPrefix("");
         viewResolver.setSuffix(".ftl");
         viewResolver.setContentType("text/html; charset=utf-8");
+        viewResolver.setRequestContextAttribute("rc");
         return viewResolver;
     }
 

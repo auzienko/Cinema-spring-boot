@@ -3,7 +3,7 @@ form {
     margin: auto
 }
 
-input, select {
+input, select.form {
     width: 400px;
     padding: 16px;
     margin: 5px 0 25px 0;
