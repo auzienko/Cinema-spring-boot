@@ -2,18 +2,39 @@
 <#import "ui.ftl" as ui/>
 <#assign titletext><@spring.message 'signup.title'/></#assign>
 <@ui.headerWithjQuery title="👤 ${titletext}"/>
-<form method="post" action="/signUp">
-    <input name="${(_csrf.parameterName)!}" value="${(_csrf.token)!}" type="hidden" />
+<form method="post" action="<@spring.url '/signUp'/>">
+    <input name="${(_csrf.parameterName)!}" value="${(_csrf.token)!}" type="hidden"/>
     <div class="container">
         <table>
             <tr>
-                <td><input name="username" placeholder="<@spring.message 'signup.username'/>" type="text" required/></td>
+                <td>
+                    <@spring.bind 'userForm.username'/>
+                    <#if spring.status.errorMessages?has_content>
+                        <span class="error">${spring.status.errorMessages?first}</span>
+                    </#if>
+                    <input name="${spring.status.expression}" placeholder="<@spring.message 'signup.username'/>"
+                           value="${spring.stringStatusValue}" type="text"/>
+                </td>
             </tr>
             <tr>
-                <td><input name="email" placeholder="<@spring.message 'signup.email'/>" type="text" required/></td>
+                <td>
+                    <@spring.bind 'userForm.email'/>
+                    <#if spring.status.errorMessages?has_content>
+                        <span class="error">${spring.status.errorMessages?first}</span>
+                    </#if>
+                    <input name="${spring.status.expression}" placeholder="<@spring.message 'signup.email'/>"
+                           value="${spring.stringStatusValue}" type="text" required/>
+                </td>
             </tr>
             <tr>
-                <td><input name="password" placeholder="<@spring.message 'signup.password'/>" type="password" required/></td>
+                <td>
+                    <@spring.bind 'userForm.password'/>
+                    <#if spring.status.errorMessages?has_content>
+                        <span class="error">${spring.status.errorMessages?first}</span>
+                    </#if>
+                    <input name="${spring.status.expression}" placeholder="<@spring.message 'signup.password'/>"
+                           value="${spring.stringStatusValue}" type="password" required/>
+                </td>
             </tr>
             <tr>
                 <td>
@@ -38,10 +59,10 @@
     </select>
 </label>
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         $("#locales").change(function () {
             var selectedOption = $('#locales').val();
-            if (selectedOption != ''){
+            if (selectedOption != '') {
                 window.location.replace('?lang=' + selectedOption);
             }
         });

@@ -1,16 +1,17 @@
 package edu.school21.cinema.controllers;
 
-import edu.school21.cinema.models.Administrator;
 import edu.school21.cinema.models.CinemaUser;
-import edu.school21.cinema.services.AdministratorService;
 import edu.school21.cinema.services.CinemaUserService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
@@ -23,39 +24,25 @@ public class SignUp {
     }
 
     @GetMapping
-    public ModelAndView getPage() {
-        return new ModelAndView("signUp");
+    public String getPage(@ModelAttribute(name = "userForm") CinemaUser cinemaUser) {
+        return "signUp";
     }
 
-//    @PostMapping
-//    public ModelAndView postPage(@re) {
-//        String email = req.getParameter("email");
-//        String password = req.getParameter("password");
-//        Optional<Administrator> user = administratorService.signUp(new Administrator(email, password));
-//        ModelAndView mv = new ModelAndView();
-//        if (user.isPresent()) {
-//            mv.setViewName("redirect:/admin/panel");
-//            AdministratorService.setToSession(req.getSession(), user.get());
-//        } else {
-//            mv.addObject("error", "Can't create this user!");
-//            mv.setViewName("signUp");
-//        }
-//        return mv;
-//    }
-
     @PostMapping
-    public ModelAndView postPage(@ModelAttribute("cinemaUser") CinemaUser inputData) {
+    public String postPage(@ModelAttribute(name = "userForm") @Valid CinemaUser inputData, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "signUp";
+        }
+
         Optional<CinemaUser> cinemaUser = Optional.empty();
         if (inputData != null) {
             cinemaUser = cinemaUserService.signUp(inputData);
         }
-        ModelAndView mv = new ModelAndView();
         if (cinemaUser.isPresent()) {
-            mv.setViewName("redirect:/profile");
+            return "redirect:/profile";
         } else {
-            mv.addObject("error", "Can't create this user!");
-            mv.setViewName("signUp");
+            model.addAttribute("error", "Can't create this user!");
         }
-        return mv;
+        return "signUp";
     }
 }
