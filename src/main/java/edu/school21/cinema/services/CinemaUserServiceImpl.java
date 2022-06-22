@@ -2,6 +2,7 @@ package edu.school21.cinema.services;
 
 import edu.school21.cinema.models.CinemaUser;
 import edu.school21.cinema.models.Role;
+import edu.school21.cinema.models.UserStatus;
 import edu.school21.cinema.repositories.CinemaUserRepository;
 import edu.school21.cinema.security.CinemaUserPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,6 +37,7 @@ public class CinemaUserServiceImpl implements CinemaUserService {
         if (!tmp.isPresent()) {
             entity.setPassword(bCryptEncoder.encode(entity.getPassword()));
             entity.setRole(Role.USER);
+            entity.setStatus(UserStatus.NOT_CONFIRMED);
             userRepository.save(entity);
             tmp = userRepository.findByEmailIgnoreCase(entity.getEmail());
             return tmp;

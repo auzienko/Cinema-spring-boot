@@ -23,6 +23,7 @@ public class MvcConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
        registry.addViewController("/profile").setViewName("profile");
+        registry.addViewController("/confirm").setViewName("confirm");
     }
 
     @Override

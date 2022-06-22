@@ -29,4 +29,7 @@ public class CinemaUser extends BaseEntity {
 
     @Column(name = "role")
     private Role role;
+
+    @Column(name = "status")
+    private UserStatus status;
 }

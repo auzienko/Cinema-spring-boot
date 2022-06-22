@@ -25,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/signUp*",
                         "/signIn*",
                         "/static/**",
-                        "/profile"
+                        "/confirm"
                 ).permitAll()
                 .anyRequest().authenticated();
     }

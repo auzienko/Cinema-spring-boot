@@ -4,7 +4,8 @@ CREATE TABLE IF NOT EXISTS cinema_users
     username         VARCHAR,
     email            VARCHAR,
     password         VARCHAR,
-    role             int
+    role             INTEGER,
+    status           INTEGER
 );
 
 CREATE TABLE IF NOT EXISTS administrators
@@ -28,8 +29,8 @@ CREATE TABLE IF NOT EXISTS movies
 (
     id               BIGSERIAL PRIMARY KEY,
     title            VARCHAR,
-    year_of_release  int,
-    age_restriction  int,
+    year_of_release  INTEGER,
+    age_restriction  INTEGER,
     description      VARCHAR,
     poster_id        BIGINT,
     administrator_id BIGINT
@@ -51,4 +52,11 @@ CREATE TABLE IF NOT EXISTS sessions
     cost             INTEGER,
     movie_hall_id    BIGINT,
     administrator_id BIGINT
+);
+
+CREATE TABLE IF NOT EXISTS email_confirmations
+(
+    id               BIGSERIAL PRIMARY KEY,
+    token            VARCHAR,
+    user_id          BIGINT
 );
