@@ -47,25 +47,5 @@
 <#if error?has_content>
     <h1 style="text-align: center"><b>${error}</b></h1>
 </#if>
-<label for="locales"><@spring.message 'lang.change'/>
-    <select id="locales">
-        <#if .locale == "ru">
-            <option value="ru"><@spring.message 'lang.ru' /></option>
-            <option value="en"><@spring.message 'lang.eng' /></option>
-        <#else>
-            <option value="en"><@spring.message 'lang.eng' /></option>
-            <option value="ru"><@spring.message 'lang.ru' /></option>
-        </#if>
-    </select>
-</label>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#locales").change(function () {
-            var selectedOption = $('#locales').val();
-            if (selectedOption != '') {
-                window.location.replace('?lang=' + selectedOption);
-            }
-        });
-    });
-</script>
+<@ui.langchoiser/>
 <@ui.tail/>

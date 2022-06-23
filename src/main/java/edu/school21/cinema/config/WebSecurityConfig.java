@@ -1,38 +1,65 @@
 package edu.school21.cinema.config;
 
+import edu.school21.cinema.models.Role;
+import edu.school21.cinema.security.CinemaAuthenticationFailureHandler;
+import edu.school21.cinema.services.CinemaUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    private final CinemaUserService userService;
+    private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public WebSecurityConfig(CinemaUserService userService, PasswordEncoder passwordEncoder) {
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .userDetailsService(userService)
+                .passwordEncoder(passwordEncoder);
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/admin/**").hasRole(Role.ADMIN.name())
                 .antMatchers(
                         "/",
                         "/index",
-                        "/signUp*",
-                        "/signIn*",
+                        "/signUp",
+                        "/signIn",
                         "/static/**",
                         "/confirm"
                 ).permitAll()
-                .anyRequest().authenticated();
-    }
-
-    @Bean
-    public PasswordEncoder bCryptEncoder() {
-        return new BCryptPasswordEncoder();
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/signIn")
+                .usernameParameter("email")
+                .loginProcessingUrl("/signIn")
+                .defaultSuccessUrl("/profile", true)
+                .failureHandler(authenticationFailureHandler())
+                .and()
+                .logout()
+                .logoutSuccessUrl("/signIn")
+        ;
     }
 
     @Bean
@@ -42,5 +69,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         registration.addUrlPatterns("/*");
         registration.setName("csrfFilter");
         return registration;
+    }
+
+    @Bean
+    public AuthenticationFailureHandler authenticationFailureHandler() {
+        return new CinemaAuthenticationFailureHandler();
     }
 }

@@ -57,10 +57,9 @@ public class SignUp {
             eventPublisher.publishEvent(new OnRegistrationCompleteEvent(cinemaUser.get(),
                     LocaleContextHolder.getLocale(), baseUrl + "/confirm/"));
             return "redirect:/confirm";
-        } else {
-            model.addAttribute("error",
-                    messageSource.getMessage("signup.error.cantCreateUser", null, LocaleContextHolder.getLocale()));
         }
+        model.addAttribute("error",
+                messageSource.getMessage("signup.error.cantCreateUser", null, LocaleContextHolder.getLocale()));
         return "signUp";
     }
 }
