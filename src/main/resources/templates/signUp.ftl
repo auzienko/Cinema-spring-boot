@@ -12,7 +12,7 @@
                     <#if spring.status.errorMessages?has_content>
                         <span class="error">${spring.status.errorMessages?first}</span>
                     </#if>
-                    <input name="${spring.status.expression}" placeholder="<@spring.message 'signup.username'/>"
+                    <input class="full-size" name="${spring.status.expression}" placeholder="<@spring.message 'signup.username'/>"
                            value="${spring.stringStatusValue}" type="text"/>
                 </td>
             </tr>
@@ -22,7 +22,7 @@
                     <#if spring.status.errorMessages?has_content>
                         <span class="error">${spring.status.errorMessages?first}</span>
                     </#if>
-                    <input name="${spring.status.expression}" placeholder="<@spring.message 'signup.email'/>"
+                    <input class="full-size" name="${spring.status.expression}" placeholder="<@spring.message 'signup.email'/>"
                            value="${spring.stringStatusValue}" type="text" required/>
                 </td>
             </tr>
@@ -32,7 +32,7 @@
                     <#if spring.status.errorMessages?has_content>
                         <span class="error">${spring.status.errorMessages?first}</span>
                     </#if>
-                    <input name="${spring.status.expression}" placeholder="<@spring.message 'signup.password'/>"
+                    <input class="full-size" name="${spring.status.expression}" placeholder="<@spring.message 'signup.password'/>"
                            value="${spring.stringStatusValue}" type="password" required/>
                 </td>
             </tr>

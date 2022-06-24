@@ -13,6 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.RememberMeServices;
+import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
@@ -29,10 +31,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .userDetailsService(userService)
-                .passwordEncoder(passwordEncoder);
+    protected void configure(AuthenticationManagerBuilder authManagerBuilder) throws Exception {
+        authManagerBuilder.userDetailsService(userService).passwordEncoder(passwordEncoder);
     }
 
     @Override
@@ -40,26 +40,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasRole(Role.ADMIN.name())
-                .antMatchers(
-                        "/",
+                .antMatchers("/",
                         "/index",
                         "/signUp",
-                        "/signIn",
                         "/static/**",
-                        "/confirm"
-                ).permitAll()
-                .anyRequest().authenticated()
-                .and()
+                        "/confirm").permitAll()
+                .anyRequest().authenticated();
+        http
                 .formLogin()
-                .loginPage("/signIn")
-                .usernameParameter("email")
-                .loginProcessingUrl("/signIn")
-                .defaultSuccessUrl("/profile", true)
-                .failureHandler(authenticationFailureHandler())
-                .and()
+                    .loginPage("/signIn")
+                    .usernameParameter("email")
+                    .loginProcessingUrl("/signIn")
+                    .defaultSuccessUrl("/profile", true)
+                    .failureHandler(authenticationFailureHandler())
+                .permitAll();
+        http
+                .rememberMe().key("school21").rememberMeServices(rememberMeServices()).tokenValiditySeconds(604800);
+
+        http
                 .logout()
-                .logoutSuccessUrl("/signIn")
-        ;
+                .deleteCookies("JSESSIONID")
+                .permitAll();
     }
 
     @Bean
@@ -74,5 +75,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public AuthenticationFailureHandler authenticationFailureHandler() {
         return new CinemaAuthenticationFailureHandler();
+    }
+
+    @Bean
+    protected RememberMeServices rememberMeServices(){
+        TokenBasedRememberMeServices tokenBasedRememberMeServices = new TokenBasedRememberMeServices("school21", userService);
+        tokenBasedRememberMeServices.setTokenValiditySeconds(604800);
+        return tokenBasedRememberMeServices;
     }
 }

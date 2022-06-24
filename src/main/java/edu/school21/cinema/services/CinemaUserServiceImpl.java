@@ -31,6 +31,7 @@ public class CinemaUserServiceImpl implements CinemaUserService {
         return new CinemaUserPrincipal(user);
     }
 
+
     @Override
     public Optional<CinemaUser> signUp(CinemaUser entity) {
         Optional<CinemaUser> tmp = userRepository.findByEmailIgnoreCase(entity.getEmail());

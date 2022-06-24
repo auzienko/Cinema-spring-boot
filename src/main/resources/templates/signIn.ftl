@@ -3,20 +3,27 @@
 <#assign titletext><@spring.message 'signin.title'/></#assign>
 <@ui.headerWithjQuery title="👤 ${titletext}"/>
 <form method="post" action="/signIn">
-    <input name="${(_csrf.parameterName)!}" value="${(_csrf.token)!}" type="hidden" />
+    <input name="${(_csrf.parameterName)!}" value="${(_csrf.token)!}" type="hidden"/>
     <div class="container">
         <table>
             <tr>
-                <td><input name="email" placeholder="<@spring.message 'signin.email'/>" type="text" required/></td>
+                <td><input class="full-size" name="email" placeholder="<@spring.message 'signin.email'/>" type="text" required/>
+                </td>
             </tr>
             <tr>
-                <td><input name="password" placeholder="<@spring.message 'signin.password'/>" type="password" required/></td>
+                <td><input class="full-size" name="password" placeholder="<@spring.message 'signin.password'/>" type="password" required/>
+                </td>
+            </tr>
+            <tr>
+                <td><label><input type="checkbox" name="remember-me"/><@spring.message 'signin.rememberMe'/></label>
+                </td>
             </tr>
             <tr>
                 <td>
                     <button type="Submit" class="btn"><@spring.message 'signin.submitButton'/></button>
                 </td>
             </tr>
+
         </table>
     </div>
 </form>
