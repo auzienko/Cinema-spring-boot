@@ -28,7 +28,7 @@ public class CinemaUserPrincipal implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user == null ? null : user.getUsername();
+        return user == null ? null : user.getEmail();
     }
 
     @Override

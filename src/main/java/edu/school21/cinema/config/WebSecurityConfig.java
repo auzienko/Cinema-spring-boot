@@ -55,7 +55,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .failureHandler(authenticationFailureHandler())
                 .permitAll();
         http
-                .rememberMe().key("school21").rememberMeServices(rememberMeServices()).tokenValiditySeconds(604800);
+                .rememberMe()
+                    .key("school21")
+                    .rememberMeServices(rememberMeServices())
+                    .tokenValiditySeconds(604800);
 
         http
                 .logout()
