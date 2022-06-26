@@ -4,6 +4,7 @@ import edu.school21.cinema.listeners.OnRegistrationCompleteEvent;
 import edu.school21.cinema.models.CinemaUser;
 import edu.school21.cinema.services.CinemaUserService;
 import edu.school21.cinema.services.utils.EmailService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -23,6 +24,9 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/signUp")
 public class SignUp {
+
+    @Value("${school21.send.email.signup}")
+    private boolean sendMail;
     private final CinemaUserService cinemaUserService;
     private final ApplicationEventPublisher eventPublisher;
     private final MessageSource messageSource;
@@ -54,8 +58,10 @@ public class SignUp {
                     .replacePath(null)
                     .build()
                     .toUriString();
-            eventPublisher.publishEvent(new OnRegistrationCompleteEvent(cinemaUser.get(),
-                    LocaleContextHolder.getLocale(), baseUrl + "/confirm/"));
+            if (sendMail) {
+                eventPublisher.publishEvent(new OnRegistrationCompleteEvent(cinemaUser.get(),
+                        LocaleContextHolder.getLocale(), baseUrl + "/confirm/"));
+            }
             return "redirect:/confirm";
         }
         model.addAttribute("error",

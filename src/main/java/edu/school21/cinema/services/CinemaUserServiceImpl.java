@@ -56,4 +56,10 @@ public class CinemaUserServiceImpl implements CinemaUserService {
         }
         return Optional.empty();
     }
+
+    @Override
+    public Optional<CinemaUser> save(CinemaUser entity) {
+        CinemaUser user = userRepository.save(entity);
+        return Optional.of(user);
+    }
 }

@@ -10,4 +10,6 @@ public interface CinemaUserService extends UserDetailsService {
     Optional<CinemaUser> signUp(CinemaUser entity);
 
     Optional<CinemaUser> signIn(String email, String password);
+
+    Optional<CinemaUser> save(CinemaUser entity);
 }
