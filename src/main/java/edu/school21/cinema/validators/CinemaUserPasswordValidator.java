@@ -6,12 +6,14 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 public class CinemaUserPasswordValidator implements ConstraintValidator<ValidPassword, String> {
+    private static final String PATTERN =  "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$";
     @Override
     public void initialize(ValidPassword constraintAnnotation) {
     }
 
     @Override
     public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
-        return s != null && s.length() > 6;
+        System.out.println(s.matches(PATTERN) + " " + s);
+        return s.matches(PATTERN);
     }
 }
