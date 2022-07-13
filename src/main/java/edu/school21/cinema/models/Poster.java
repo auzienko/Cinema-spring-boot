@@ -27,5 +27,5 @@ public class Poster extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "administrator_id", referencedColumnName = "id")
-    private Administrator administrator;
+    private CinemaUser administrator;
 }

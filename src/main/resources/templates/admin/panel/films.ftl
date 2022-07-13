@@ -1,10 +1,11 @@
-<#ftl encoding="utf-8">
+<#import "/spring.ftl" as spring />
 <#import "../../ui.ftl" as ui/>
-<@ui.header title="🎞 Films panel"/>
+<#assign titletext><@spring.message 'films.title'/></#assign>
+<@ui.headerWithjQuery title="🎞  ${titletext}"/>
 <#if error?has_content>
     <h1 style="text-align: center"><b>${error}</b></h1>
 </#if>
-<form method="post" action="films" enctype="multipart/form-data" accept-charset="utf-8">
+<form method="post" action="films?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data" accept-charset="utf-8">
     <div class="container">
         <table>
             <tr>
@@ -51,7 +52,7 @@
                 <tr>
                     <td>${row.id}</td>
                     <td>
-                        <img src="../../images/${row.poster.fileNameUUID}" width="150" />
+                        <img src="../../../images/${row.poster.fileNameUUID}" width="150" />
                     </td>
                     <td>${row.title}</td>
                     <td>${row.description}</td>
@@ -62,4 +63,5 @@
         </table>
     </div>
 </#if>
+<@ui.langchoiser/>
 <@ui.tail/>

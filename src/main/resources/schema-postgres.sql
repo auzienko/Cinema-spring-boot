@@ -13,12 +13,12 @@ CREATE TABLE IF NOT EXISTS cinema.cinema_users
     status           INTEGER
 );
 
-CREATE TABLE IF NOT EXISTS cinema.administrators
-(
-    id               BIGSERIAL PRIMARY KEY,
-    email            VARCHAR,
-    password         VARCHAR
-);
+-- CREATE TABLE IF NOT EXISTS cinema.administrators
+-- (
+--     id               BIGSERIAL PRIMARY KEY,
+--     email            VARCHAR,
+--     password         VARCHAR
+-- );
 
 CREATE TABLE IF NOT EXISTS cinema.posters
 (

@@ -1,10 +1,11 @@
 package edu.school21.cinema.controllers.admin.panel;
 
-import edu.school21.cinema.models.Administrator;
+//import edu.school21.cinema.models.Administrator;
+import edu.school21.cinema.models.CinemaUser;
 import edu.school21.cinema.models.Movie;
 import edu.school21.cinema.models.MovieHall;
 import edu.school21.cinema.models.Session;
-import edu.school21.cinema.services.AdministratorService;
+//import edu.school21.cinema.services.AdministratorService;
 import edu.school21.cinema.services.MovieHallService;
 import edu.school21.cinema.services.MovieService;
 import edu.school21.cinema.services.SessionService;
@@ -50,7 +51,7 @@ public class Sessions {
     }
 
     @PostMapping
-    public ModelAndView postPage(HttpServletRequest req,
+    public ModelAndView postPage(@ModelAttribute("cinemaUser") CinemaUser administrator, HttpServletRequest req,
                                  @RequestParam("movie") Long movie_id,
                                  @RequestParam("hall") Long hall_id,
                                  @RequestParam("dateTime") String dateTime,
@@ -58,7 +59,7 @@ public class Sessions {
                                  ) {
         ModelAndView modelAndView = new ModelAndView("redirect:" + PAGE_PATH);
 
-        Administrator administrator = AdministratorService.getFromSession(req.getSession());
+        //Administrator administrator = AdministratorService.getFromSession(req.getSession());
         Optional<MovieHall> optionalMovieHall = movieHallService.get(hall_id);
         Optional<Movie> optionalMovie = movieService.get(movie_id);
         LocalDateTime localDateTime = LocalDateTime.parse(dateTime);

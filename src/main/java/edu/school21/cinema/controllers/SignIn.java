@@ -2,6 +2,7 @@ package edu.school21.cinema.controllers;
 
 import edu.school21.cinema.models.CinemaUser;
 import edu.school21.cinema.models.UserStatus;
+import edu.school21.cinema.services.CinemaUserService;
 import edu.school21.cinema.services.CinemaUserServiceImpl;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @Controller
@@ -30,7 +32,7 @@ public class SignIn {
     }
 
     @PostMapping()
-    public String postPage(@ModelAttribute("cinemaUser") CinemaUser inputData, Model model) {
+    public String postPage(@ModelAttribute("cinemaUser") CinemaUser inputData, Model model, HttpSession session) {
         Optional<CinemaUser> cinemaUser = Optional.empty();
         if (inputData != null) {
             cinemaUser = cinemaUserService.signIn(inputData.getEmail(), inputData.getPassword());
@@ -40,6 +42,7 @@ public class SignIn {
                 model.addAttribute("error",
                         messageSource.getMessage("signin.error.userEmailIsNotConfirmed", null, LocaleContextHolder.getLocale()));
             }
+            CinemaUserService.setToSession(session, cinemaUser.get());
         } else {
             model.addAttribute("error",
                     messageSource.getMessage("signin.error.wrongEmailOrPassword", null, LocaleContextHolder.getLocale()));

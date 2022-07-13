@@ -1,12 +1,14 @@
 package edu.school21.cinema.controllers.admin.panel;
 
-import edu.school21.cinema.models.Administrator;
+//import edu.school21.cinema.models.Administrator;
+import edu.school21.cinema.models.CinemaUser;
 import edu.school21.cinema.models.MovieHall;
-import edu.school21.cinema.services.AdministratorService;
+//import edu.school21.cinema.services.AdministratorService;
 import edu.school21.cinema.services.MovieHallService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,9 +29,9 @@ public class Halls {
     }
 
     @GetMapping
-    public ModelAndView getPage(HttpServletRequest req) {
+    public ModelAndView getPage(@ModelAttribute("cinemaUser") CinemaUser administrator, HttpServletRequest req) {
         ModelAndView modelAndView = new ModelAndView(PAGE_PATH);
-        Administrator administrator = AdministratorService.getFromSession(req.getSession());
+        //Administrator administrator = AdministratorService.getFromSession(req.getSession());
         List<MovieHall> movieHallList = movieHallService.getAllByAdministratorId(administrator.getId());
         if (movieHallList.size() > 0) {
             modelAndView.addObject("movieHallList", movieHallList);
@@ -38,9 +40,9 @@ public class Halls {
     }
 
     @PostMapping
-    public ModelAndView postPage(HttpServletRequest req) {
+    public ModelAndView postPage(@ModelAttribute("cinemaUser") CinemaUser administrator, HttpServletRequest req) {
         ModelAndView modelAndView = new ModelAndView(PAGE_PATH);
-        Administrator administrator = AdministratorService.getFromSession(req.getSession());
+       //Administrator administrator = AdministratorService.getFromSession(req.getSession());
         Integer serialNumber = null;
         Integer seats = null;
         try {

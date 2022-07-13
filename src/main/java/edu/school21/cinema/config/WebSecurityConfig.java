@@ -44,6 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/index",
                         "/signUp",
                         "/static/**",
+                        "/images/**",
                         "/confirm").permitAll()
                 .anyRequest().authenticated();
         http
@@ -54,6 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .defaultSuccessUrl("/profile", true)
                     .failureHandler(authenticationFailureHandler())
                 .permitAll();
+
         http
                 .rememberMe()
                     .key("school21")
@@ -74,6 +76,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         registration.setName("csrfFilter");
         return registration;
     }
+
+
 
     @Bean
     public AuthenticationFailureHandler authenticationFailureHandler() {
