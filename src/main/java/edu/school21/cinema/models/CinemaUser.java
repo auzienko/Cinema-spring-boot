@@ -14,7 +14,7 @@ import javax.validation.constraints.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Table(name = "cinema_users")
+@Table(schema = "cinema", name = "cinema_users")
 public class CinemaUser extends BaseEntity {
     @Column(name = "username")
     @NotEmpty(message = "{validation.username.notEmpty}")

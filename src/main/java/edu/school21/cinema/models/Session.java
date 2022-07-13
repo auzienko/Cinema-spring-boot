@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name="sessions")
+@Table(schema = "cinema", name="sessions")
 public class Session extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.EAGER)

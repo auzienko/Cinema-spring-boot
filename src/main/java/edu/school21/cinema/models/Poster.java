@@ -11,7 +11,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name="posters")
+@Table(schema = "cinema", name="posters")
 public class Poster extends BaseEntity{
     @Column(name = "file_name")
     private String fileName;

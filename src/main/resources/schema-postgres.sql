@@ -1,4 +1,9 @@
-CREATE TABLE IF NOT EXISTS cinema_users
+drop schema if exists cinema cascade ;
+create schema if not exists cinema;
+
+
+
+CREATE TABLE IF NOT EXISTS cinema.cinema_users
 (
     id               BIGSERIAL PRIMARY KEY,
     username         VARCHAR,
@@ -8,14 +13,14 @@ CREATE TABLE IF NOT EXISTS cinema_users
     status           INTEGER
 );
 
-CREATE TABLE IF NOT EXISTS administrators
+CREATE TABLE IF NOT EXISTS cinema.administrators
 (
     id               BIGSERIAL PRIMARY KEY,
     email            VARCHAR,
     password         VARCHAR
 );
 
-CREATE TABLE IF NOT EXISTS posters
+CREATE TABLE IF NOT EXISTS cinema.posters
 (
     id               BIGSERIAL PRIMARY KEY,
     file_name        VARCHAR,
@@ -25,7 +30,7 @@ CREATE TABLE IF NOT EXISTS posters
     administrator_id BIGINT
 );
 
-CREATE TABLE IF NOT EXISTS movies
+CREATE TABLE IF NOT EXISTS cinema.movies
 (
     id               BIGSERIAL PRIMARY KEY,
     title            VARCHAR,
@@ -36,7 +41,7 @@ CREATE TABLE IF NOT EXISTS movies
     administrator_id BIGINT
 );
 
-CREATE TABLE IF NOT EXISTS movie_halls
+CREATE TABLE IF NOT EXISTS cinema.movie_halls
 (
     id               BIGSERIAL PRIMARY KEY,
     serial_number    INTEGER,
@@ -44,7 +49,7 @@ CREATE TABLE IF NOT EXISTS movie_halls
     administrator_id BIGINT
 );
 
-CREATE TABLE IF NOT EXISTS sessions
+CREATE TABLE IF NOT EXISTS cinema.sessions
 (
     id               BIGSERIAL PRIMARY KEY,
     movie_id         BIGINT,
@@ -54,7 +59,7 @@ CREATE TABLE IF NOT EXISTS sessions
     administrator_id BIGINT
 );
 
-CREATE TABLE IF NOT EXISTS email_confirmations
+CREATE TABLE IF NOT EXISTS cinema.email_confirmations
 (
     id               BIGSERIAL PRIMARY KEY,
     token            VARCHAR,

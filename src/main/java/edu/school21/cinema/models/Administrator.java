@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name="administrators")
+@Table(schema = "cinema", name="administrators")
 @JsonIgnoreType
 public class Administrator extends BaseEntity{
     @Column(name = "email")

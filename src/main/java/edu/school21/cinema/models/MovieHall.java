@@ -10,7 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name="movie_halls")
+@Table(schema = "cinema", name="movie_halls")
 public class MovieHall extends BaseEntity{
     @Column(name = "serial_number")
     private Integer serialNumber;

@@ -10,7 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "movies")
+@Table(schema = "cinema", name = "movies")
 public class Movie extends BaseEntity {
     @Column(name = "title")
     private String title;
