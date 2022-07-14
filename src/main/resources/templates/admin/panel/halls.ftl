@@ -1,21 +1,24 @@
+<#import "/spring.ftl" as spring />
 <#import "../../ui.ftl" as ui/>
-<@ui.header title="🍿 Halls panel"/>
+<#assign titletext><@spring.message 'hals.title'/></#assign>
+<@ui.headerWithjQuery title="🍿  ${titletext}"/>
 <#if error?has_content>
     <h1 style="text-align: center"><b>${error}</b></h1>
 </#if>
 <form method="post" action="halls">
+    <input name="${(_csrf.parameterName)!}" value="${(_csrf.token)!}" type="hidden"/>
     <div class="container">
-        <table>
+        <table class="minimalistBlack" style="background-color: thistle">
             <tr>
                 <td>
                     <label for="serialNumber">Enter hall's serial number:</label>
-                    <input name="serialNumber" type="number" value="0" min="0" max="42" required/>
+                    <input class="inp" name="serialNumber" type="number" value="0" min="0" max="42" required/>
                 </td>
             </tr>
             <tr>
                 <td>
                     <label for="seats">Enter count of seats:</label>
-                    <input name="seats" type="number" value="0" min="0" max="420" required/>
+                    <input class="inp" name="seats" type="number" value="0" min="0" max="420" required/>
                 </td>
             </tr>
             <tr>

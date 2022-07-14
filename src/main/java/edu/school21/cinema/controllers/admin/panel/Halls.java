@@ -4,8 +4,11 @@ package edu.school21.cinema.controllers.admin.panel;
 import edu.school21.cinema.models.CinemaUser;
 import edu.school21.cinema.models.MovieHall;
 //import edu.school21.cinema.services.AdministratorService;
+import edu.school21.cinema.services.CinemaUserService;
 import edu.school21.cinema.services.MovieHallService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,22 +20,24 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
+@AllArgsConstructor
 @Controller("adminPanelHalls")
 @RequestMapping("/admin/panel/halls")
 public class Halls {
     private final String PAGE_PATH = "/admin/panel/halls";
     private MovieHallService movieHallService;
+    private CinemaUserService cinemaUserService;
 
-    @Autowired
-    public Halls(MovieHallService movieHallService) {
-        this.movieHallService = movieHallService;
-    }
+//    @Autowired
+//    public Halls(MovieHallService movieHallService) {
+//        this.movieHallService = movieHallService;
+//    }
 
     @GetMapping
-    public ModelAndView getPage(@ModelAttribute("cinemaUser") CinemaUser administrator, HttpServletRequest req) {
+    public ModelAndView getPage(HttpServletRequest req) {
         ModelAndView modelAndView = new ModelAndView(PAGE_PATH);
-        //Administrator administrator = AdministratorService.getFromSession(req.getSession());
-        List<MovieHall> movieHallList = movieHallService.getAllByAdministratorId(administrator.getId());
+        Optional<CinemaUser> administrator = cinemaUserService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        List<MovieHall> movieHallList = movieHallService.getAllByAdministratorId(administrator.get().getId());
         if (movieHallList.size() > 0) {
             modelAndView.addObject("movieHallList", movieHallList);
         }
@@ -40,9 +45,9 @@ public class Halls {
     }
 
     @PostMapping
-    public ModelAndView postPage(@ModelAttribute("cinemaUser") CinemaUser administrator, HttpServletRequest req) {
+    public ModelAndView postPage(HttpServletRequest req) {
         ModelAndView modelAndView = new ModelAndView(PAGE_PATH);
-       //Administrator administrator = AdministratorService.getFromSession(req.getSession());
+        Optional<CinemaUser> administrator = cinemaUserService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Integer serialNumber = null;
         Integer seats = null;
         try {
@@ -57,7 +62,7 @@ public class Halls {
             modelAndView.addObject("error", "❌ This movie hall (" + serialNumber + ") is already exist!");
             return modelAndView;
         } else {
-            movieHallService.add(new MovieHall(serialNumber, seats, administrator));
+            movieHallService.add(new MovieHall(serialNumber, seats, administrator.get()));
             modelAndView.setViewName("redirect:" + PAGE_PATH);
         }
         return modelAndView;

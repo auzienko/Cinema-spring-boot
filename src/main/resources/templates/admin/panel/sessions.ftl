@@ -1,15 +1,18 @@
+<#import "/spring.ftl" as spring />
 <#import "../../ui.ftl" as ui/>
-<@ui.header title="🌅 Sessions panel"/>
+<#assign titletext><@spring.message 'session.title'/></#assign>
+<@ui.headerWithjQuery title="🌅 ${titletext}"/>
 <#if error?has_content>
     <h1 style="text-align: center"><b>${error}</b></h1>
 </#if>
 <form method="post" action="sessions">
+    <input name="${(_csrf.parameterName)!}" value="${(_csrf.token)!}" type="hidden"/>
     <div class="container">
-        <table>
+        <table class="minimalistBlack" style="background-color: thistle">
             <tr>
                 <td>
                     <label for="movie">Select a film:</label>
-                    <select name="movie">
+                    <select  class="inp" name="movie">
                         <#list movieList as movie>
                             <option value="${movie.id}">${movie.title}</option>
                         </#list>
@@ -19,7 +22,7 @@
             <tr>
                 <td>
                     <label for="hall">Select a hall:</label>
-                    <select name="hall">
+                    <select class="inp" name="hall">
                         <#list movieHallList as hall>
                             <option value="${hall.id}">${hall.serialNumber}</option>
                         </#list>
@@ -29,13 +32,13 @@
             <tr>
                 <td>
                     <label for="dateTime">Enter session date and time</label>
-                    <input name="dateTime" type="datetime-local" required/>
+                    <input class="inp" name="dateTime" type="datetime-local" min="today" required/>
                 </td>
             </tr>
             <tr>
                 <td>
                     <label for="cost">Enter ticket cost:</label>
-                    <input name="cost" type="number" value="100" min="0" max="1000" required/>
+                    <input class="inp" name="cost" type="number" value="100" min="0" max="1000" required/>
                 </td>
             </tr>
             <tr>

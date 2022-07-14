@@ -6,6 +6,7 @@ import edu.school21.cinema.models.Movie;
 import edu.school21.cinema.models.Poster;
 import edu.school21.cinema.services.CinemaUserService;
 import edu.school21.cinema.services.MovieService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@AllArgsConstructor
 @Controller("adminPanelFilms")
 @RequestMapping("/admin/panel/films")
 public class Films {
@@ -29,12 +31,12 @@ public class Films {
     private CinemaUserService cinemaUserService;
     private Environment env;
 
-    @Autowired
-    public Films(MovieService movieService, Environment env, CinemaUserService cinemaUserService) {
-        this.movieService = movieService;
-        this.env = env;
-        this.cinemaUserService = cinemaUserService;
-    }
+//    @Autowired
+//    public Films(MovieService movieService, Environment env, CinemaUserService cinemaUserService) {
+//        this.movieService = movieService;
+//        this.env = env;
+//        this.cinemaUserService = cinemaUserService;
+//    }
 
     @GetMapping
     public ModelAndView getPage (HttpServletRequest req) {
