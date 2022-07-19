@@ -16,7 +16,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -59,16 +63,18 @@ public class Sessions {
     public ModelAndView postPage(HttpServletRequest req,
                                  @RequestParam("movie") Long movie_id,
                                  @RequestParam("hall") Long hall_id,
-                                 @RequestParam("dateTime") LocalDateTime dateTime,
+                                 @RequestParam("dateTime") String dateTime,
                                  @RequestParam("cost") Integer cost
-                                 ) {
+                                 ) throws ParseException {
         ModelAndView modelAndView = new ModelAndView("redirect:" + PAGE_PATH);
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
         Optional<CinemaUser> administrator = cinemaUserService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Optional<MovieHall> optionalMovieHall = movieHallService.get(movie_id);
         Optional<Movie> optionalMovie = movieService.get(hall_id);
-      //  LocalDateTime localDateTime = LocalDateTime.parse(dateTime);
+        LocalDateTime localDateTime = LocalDateTime.parse(dateTime);
+
         if (optionalMovie.isPresent() && optionalMovieHall.isPresent()){
-       //     sessionService.add(new Session(optionalMovie.get(), localDateTime, cost, optionalMovieHall.get(), administrator.get()));
+           sessionService.add(new Session(optionalMovie.get(), localDateTime, cost, optionalMovieHall.get(), administrator.get()));
         }
         return  modelAndView;
     }

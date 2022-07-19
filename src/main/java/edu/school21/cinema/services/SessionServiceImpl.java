@@ -36,6 +36,6 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public List<Session> searchByTitle(String title) {
-        return sessionRepository.findByMovie_TitleIgnoreCase(title);
+        return sessionRepository.findByMovie_TitleContainingIgnoreCase(title);
     }
 }

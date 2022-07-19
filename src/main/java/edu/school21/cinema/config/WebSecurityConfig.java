@@ -45,6 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/signUp",
                         "/static/**",
                         "/images/**",
+                        "/sessions/**",
                         "/confirm").permitAll()
                 .anyRequest().authenticated();
         http
