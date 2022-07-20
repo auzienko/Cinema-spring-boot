@@ -69,4 +69,7 @@
         </table>
     </div>
 </#if>
+<#if error?has_content>
+    <h1 style="text-align: center"><b>${error}</b></h1>
+</#if>
 <@ui.tail/>

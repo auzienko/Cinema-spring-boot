@@ -4,25 +4,20 @@ import edu.school21.cinema.models.Session;
 import edu.school21.cinema.models.CinemaUser;
 import edu.school21.cinema.models.Movie;
 import edu.school21.cinema.models.MovieHall;
-//import edu.school21.cinema.services.AdministratorService;
 import edu.school21.cinema.services.CinemaUserService;
 import edu.school21.cinema.services.MovieHallService;
 import edu.school21.cinema.services.MovieService;
 import edu.school21.cinema.services.SessionService;
 import lombok.AllArgsConstructor;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -34,6 +29,7 @@ public class Sessions {
     private final MovieHallService movieHallService;
     private final MovieService movieService;
     private final CinemaUserService cinemaUserService;
+    private final MessageSource messageSource;
 
 //    public Sessions(SessionService sessionService, MovieHallService movieHallService, MovieService movieService) {
 //        this.sessionService = sessionService;
@@ -53,26 +49,31 @@ public class Sessions {
         modelAndView.addObject("movieList", movieList);
         modelAndView.addObject("movieHallList", movieHallList);
         if (movieList.size() == 0 || movieHallList.size() == 0) {
-            modelAndView.addObject("error", "❌ You have to create a Movie and a Hall!");
+            modelAndView.addObject("error",
+                    messageSource.getMessage("session.error.createMovieAndHall", null, LocaleContextHolder.getLocale()));
         }
         return modelAndView;
     }
 
 
     @PostMapping
-    public ModelAndView postPage(HttpServletRequest req,
+    public ModelAndView postPage(Model model,
                                  @RequestParam("movie") Long movie_id,
                                  @RequestParam("hall") Long hall_id,
                                  @RequestParam("dateTime") String dateTime,
                                  @RequestParam("cost") Integer cost
-                                 ) throws ParseException {
+                                 ) {
         ModelAndView modelAndView = new ModelAndView("redirect:" + PAGE_PATH);
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
         Optional<CinemaUser> administrator = cinemaUserService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Optional<MovieHall> optionalMovieHall = movieHallService.get(movie_id);
         Optional<Movie> optionalMovie = movieService.get(hall_id);
         LocalDateTime localDateTime = LocalDateTime.parse(dateTime);
+        if (localDateTime.isBefore(LocalDateTime.now())) {
+            modelAndView.addObject("error",
+                    messageSource.getMessage("session.error.wrongDate", null, LocaleContextHolder.getLocale()));
 
+            return modelAndView;
+        }
         if (optionalMovie.isPresent() && optionalMovieHall.isPresent()){
            sessionService.add(new Session(optionalMovie.get(), localDateTime, cost, optionalMovieHall.get(), administrator.get()));
         }

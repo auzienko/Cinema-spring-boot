@@ -65,3 +65,20 @@ CREATE TABLE IF NOT EXISTS cinema.email_confirmations
     token            VARCHAR,
     user_id          BIGINT
 );
+
+create table if not exists cinema.messages
+(
+    id              bigserial primary key,
+    text            varchar,
+    date            timestamp,
+    author_id       bigint references cinema.cinema_users(id),
+    film_id         bigint references cinema.movies(id)
+);
+
+create table if not exists  cinema.user_auth_history
+(
+    id        BIGSERIAL PRIMARY KEY,
+    date_time TIMESTAMP,
+    ip        VARCHAR,
+    user_id   BIGINT references cinema.cinema_users(id)
+);
