@@ -13,7 +13,7 @@
     <div class="container">
         <table class="minimalistBlack" style="background-color: thistle">
             <tr>
-                <input class="inp" name="posterFile" placeholder="Upload poster image" type="file" accept="image/*"
+                <input class="inp" name="posterFile" placeholder="Upload image image" type="file" accept="image/*"
                        required/></td>
             </tr>
             <tr>
@@ -56,7 +56,7 @@
                 <tr>
                     <td>${row.id}</td>
                     <td>
-                        <img src="../../../images/${row.poster.fileNameUUID}" width="150" />
+                        <img src="../../../images/${row.image.fileNameUUID}" width="150" />
                     </td>
                     <td>${row.title}</td>
                     <td>${row.description}</td>

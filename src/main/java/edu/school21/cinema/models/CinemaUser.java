@@ -3,9 +3,7 @@ package edu.school21.cinema.models;
 import edu.school21.cinema.annotations.ValidPassword;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.*;
 
 @Entity
@@ -32,4 +30,10 @@ public class CinemaUser extends BaseEntity {
 
     @Column(name = "status")
     private UserStatus status;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "avatar_id", referencedColumnName = "id")
+    private Image avatar;
+
+
 }

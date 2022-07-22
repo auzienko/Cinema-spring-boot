@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 public interface CinemaUserService extends UserDetailsService {
-    static final String TOKEN_ID = "cinemaUser";
+    String TOKEN_ID = "cinemaUser";
 
     Optional<CinemaUser> signUp(CinemaUser entity);
 

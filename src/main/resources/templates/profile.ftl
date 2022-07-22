@@ -12,18 +12,30 @@
             <table style="height: 100%; width: 100%; border-collapse: collapse;" border="0" cellspacing="0"
                    cellpadding="0">
                 <tbody>
-<#--                <tr>-->
-<#--                    <td style="width: 100%;">-->
-<#--                        <img src="${avatar}" width="150"/>-->
-<#--                    </td>-->
-<#--                </tr>-->
                 <tr>
                     <td style="width: 100%;">
-                        <form action="profile" enctype="multipart/form-data"
+                        <img src="${avatar}" width="150"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 100%;">
+                        <form action="profile?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data"
                               method="post">
                             <input type="file" name="avatarFile" class="btn" accept="image/*" required>
                             <button type="submit" class="btn">Upload</button>
                         </form>
+                        <form action="/sessions" method="get">
+                            <div class="container">
+                                <button style="width: 350px" type="submit" class="btn" >Find session</button>
+                            </div>
+                        </form>
+                        <#if user.role = "ADMIN">
+                            <form action="/admin/panel" method="get">
+                                <div class="container">
+                                    <button style="width: 350px" type="submit" class="btn" >Admin panel</button>
+                                </div>
+                            </form>
+                        </#if>
                     </td>
                 </tr>
                 </tbody>
@@ -35,7 +47,6 @@
                 <tbody>
                 <tr>
                     <td style="width: 100%;">
-
                         <h1>${user.username}</h1>
                         <p>${user.email}</p>
                     </td>
@@ -73,24 +84,24 @@
     </tbody>
 </table>
     <tbody>
-<#--    <#if avatarHistory?has_content>-->
-<#--        <div class="container">-->
-<#--            <table class="minimalistBlack">-->
-<#--                <thead>-->
-<#--                <th>File</th>-->
-<#--                <th>Size</th>-->
-<#--                <th>Mime</th>-->
-<#--                </thead>-->
-<#--                <#list avatarHistory as row>-->
-<#--                    <tr>-->
-<#--                        <td> <a href="../../images/avatar/${row.fileNameUUID}"  target="_blank">${row.fileName}</a></td>-->
-<#--                        <td>${row.size}</td>-->
-<#--                        <td>${row.mime}</td>-->
-<#--                    </tr>-->
-<#--                </#list>-->
-<#--            </table>-->
-<#--        </div>-->
-<#--    </#if>-->
+    <#if avatarHistory?has_content>
+        <div class="container">
+            <table class="minimalistBlack">
+                <thead>
+                <th>File</th>
+                <th>Size</th>
+                <th>Mime</th>
+                </thead>
+                <#list avatarHistory as row>
+                    <tr>
+                        <td> <a href="../../images/avatar/${row.fileNameUUID}"  target="_blank">${row.fileName}</a></td>
+                        <td>${row.size}</td>
+                        <td>${row.mime}</td>
+                    </tr>
+                </#list>
+            </table>
+        </div>
+    </#if>
     </tbody>
 </table>
 <@ui.tail/>

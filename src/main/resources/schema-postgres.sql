@@ -1,7 +1,16 @@
 drop schema if exists cinema cascade ;
 create schema if not exists cinema;
 
-
+CREATE TABLE IF NOT EXISTS cinema.images
+(
+    id               BIGSERIAL PRIMARY KEY,
+    file_name        VARCHAR,
+    type             INTEGER,
+    size             BIGINT,
+    mime             VARCHAR,
+    file_name_UUID   VARCHAR,
+    administrator_id BIGINT
+);
 
 CREATE TABLE IF NOT EXISTS cinema.cinema_users
 (
@@ -10,25 +19,10 @@ CREATE TABLE IF NOT EXISTS cinema.cinema_users
     email            VARCHAR,
     password         VARCHAR,
     role             INTEGER,
-    status           INTEGER
+    status           INTEGER,
+    avatar_id        BIGINT
 );
 
--- CREATE TABLE IF NOT EXISTS cinema.administrators
--- (
---     id               BIGSERIAL PRIMARY KEY,
---     email            VARCHAR,
---     password         VARCHAR
--- );
-
-CREATE TABLE IF NOT EXISTS cinema.posters
-(
-    id               BIGSERIAL PRIMARY KEY,
-    file_name        VARCHAR,
-    size             BIGINT,
-    mime             VARCHAR,
-    file_name_UUID   VARCHAR,
-    administrator_id BIGINT
-);
 
 CREATE TABLE IF NOT EXISTS cinema.movies
 (

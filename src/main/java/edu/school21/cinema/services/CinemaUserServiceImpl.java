@@ -46,6 +46,8 @@ public class CinemaUserServiceImpl implements CinemaUserService {
         return Optional.empty();
     }
 
+
+
     @Override
     public Optional<CinemaUser> signIn(String email, String password) {
         Optional<CinemaUser> tmp = userRepository.findByEmailIgnoreCase(email);

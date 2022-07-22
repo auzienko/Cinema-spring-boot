@@ -24,7 +24,7 @@
                             $('#sessions-search-result').append(
                                 '<div class="searchItem">'
                                 + '<img src="/images/'
-                                + data.sessions[i].movie.poster.fileNameUUID
+                                + data.sessions[i].movie.image.fileNameUUID
                                 + '" width="150" height="225"/>'
                                 + '<div>'
                                 + data.sessions[i].dateTime

@@ -2,7 +2,8 @@ package edu.school21.cinema.controllers;
 
 
 import edu.school21.cinema.models.CinemaUser;
-import edu.school21.cinema.models.Poster;
+import edu.school21.cinema.models.Image;
+import edu.school21.cinema.models.ImageType;
 import edu.school21.cinema.services.CinemaUserService;
 import edu.school21.cinema.services.PosterService;
 import edu.school21.cinema.services.UserAuthHistoryService;
@@ -47,16 +48,16 @@ public class Profile {
             modelAndView.setViewName("redirect: /");
             return modelAndView;
         }
-        //Poster avatar = user.getAvatar();
+        Image avatar = user.get().getAvatar();
         modelAndView.addObject( "user", user.get());
-        //modelAndView.addObject("avatarHistory", posterService.getAllAvatars(user.getId()));
+        modelAndView.addObject("avatarHistory", posterService.getAllAvatars(user.get().getId(), avatar == null ? null : avatar.getType()));
         modelAndView.addObject("authHistory", userAuthHistoryService.getUserAuthHistory(user.get().getId()));
-//        if (avatar != null){
-//            modelAndView.addObject("avatar", "../../images/" + avatar.getFileNameUUID());
-//        }
-//        else{
-//            modelAndView.addObject("avatar", "https://html-online.com/editor/images/html-editor.png");
-//        }
+        if (avatar != null){
+            modelAndView.addObject("avatar", "../../images/" + avatar.getFileNameUUID());
+        }
+        else{
+            modelAndView.addObject("avatar", "https://html-online.com/editor/images/html-editor.png");
+        }
         return modelAndView;
     }
 
@@ -77,10 +78,11 @@ public class Profile {
             modelAndView.addObject("error", "❌ Can't save avatar!");
             return modelAndView;
         }
-//        Poster avatar = new Poster(avatarFile.getOriginalFilename(), 2,
-//                uuid, avatarFile.getSize(), avatarFile.getContentType(), user.get());
-//        posterService.add(avatar);
- //       cinemaUserService.addAvatar(avatar.getId(), administrator);
+        Image avatar = new Image(avatarFile.getOriginalFilename(),
+                uuid, ImageType.AVATAR,  avatarFile.getSize(), avatarFile.getContentType(), user.get());
+        posterService.add(avatar);
+        user.get().setAvatar(avatar);
+        cinemaUserService.save(user.get());
         modelAndView.setViewName("redirect:" + PAGE_PATH);
         return modelAndView;
     }

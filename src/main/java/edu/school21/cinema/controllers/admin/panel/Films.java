@@ -2,12 +2,12 @@ package edu.school21.cinema.controllers.admin.panel;
 
 
 import edu.school21.cinema.models.CinemaUser;
+import edu.school21.cinema.models.ImageType;
 import edu.school21.cinema.models.Movie;
-import edu.school21.cinema.models.Poster;
+import edu.school21.cinema.models.Image;
 import edu.school21.cinema.services.CinemaUserService;
 import edu.school21.cinema.services.MovieService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -89,9 +89,9 @@ public class Films {
             modelAndView.addObject("error", "❌ Can't save poster!");
             return modelAndView;
         }
-        Poster poster = new Poster(posterFile.getOriginalFilename(),
-                uuid, posterFile.getSize(), posterFile.getContentType(), administrator.get());
-        Movie movie = new Movie(inputData.getTitle(), yOF, aR, inputData.getDescription(), poster, administrator.get());
+        Image image = new Image(posterFile.getOriginalFilename(),
+                uuid, ImageType.POSTER,  posterFile.getSize(),  posterFile.getContentType(), administrator.get());
+        Movie movie = new Movie(inputData.getTitle(), yOF, aR, inputData.getDescription(), image, administrator.get());
         movieService.add(movie);
         modelAndView.setViewName("redirect:" + PAGE_PATH);
         return modelAndView;
