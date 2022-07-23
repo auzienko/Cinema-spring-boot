@@ -1,5 +1,7 @@
+<#import "/spring.ftl" as spring />
 <#import "ui.ftl" as ui/>
-<@ui.header title="👥 Welcome to ${movie.title} Chat"/>
+<#assign titletext><@spring.message 'chat.title'/></#assign>
+<@ui.headerWithjQuery title="👤 ${titletext} ${movie.title}"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.0/sockjs.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
     <style>
@@ -74,6 +76,7 @@
             border-radius: 16px;
         }
     </style>
+
 <script type="text/javascript">
     var stompClient = null;
 
@@ -104,13 +107,14 @@
 
     function send() {
         var message = {
-            sender: "${user.name}",
+            sender: "${user.username}",
             text: document.getElementById('chatMsg').value,
             film_id:  ${movie.id},
             email: "${user.email}"
         };
         document.getElementById('chatMsg').value = "";
-        stompClient.send("/app/admin/panel/films/$${movie.id}/chat", {}, JSON.stringify(message));
+        stompClient.send("/app/films/${movie.id}/chat", {}, JSON.stringify(message));
+
     }
 
     function showMessageOutput(message) {
@@ -118,15 +122,15 @@
         messageElement.className = 'bubbleWrapper';
 
         var container = document.createElement('div');
-        container.className = (message.author.name === "${user.name}") ? 'inlineContainer own' : 'inlineContainer';
+        container.className = (message.author.name === "${user.username}") ? 'inlineContainer own' : 'inlineContainer';
 
         var usernameText = document.createElement('label');
         usernameText.textContent = message.author.name;
-        if (message.author.name === "${user.name}")
+        if (message.author.name === "${user.username}")
             usernameText.hidden = true;
 
         var textElement = document.createElement('div');
-        textElement.className = (message.author.name === "${user.name}") ? 'ownBubble own' : 'otherBubble other';
+        textElement.className = (message.author.name === "${user.username}") ? 'ownBubble own' : 'otherBubble other';
         textElement.textContent = message.text;
 
         messageArea.appendChild(messageElement);
@@ -139,15 +143,15 @@
         var messageElement = document.createElement('div');
         messageElement.className = 'bubbleWrapper';
         var container = document.createElement('div');
-        container.className = (messageSender === "${user.name}") ? 'inlineContainer own' : 'inlineContainer';
+        container.className = (messageSender === "${user.username}") ? 'inlineContainer' : 'inlineContainer own';
 
         var usernameText = document.createElement('label');
         usernameText.textContent = messageSender;
-        if (messageSender === "${user.name}")
+        if (messageSender === "${user.username}")
             usernameText.hidden = true;
 
         var textElement = document.createElement('div');
-        textElement.className = (messageSender === "${user.name}") ? 'ownBubble own' : 'otherBubble other';
+        textElement.className = (messageSender === "${user.username}") ? 'otherBubble other' : 'ownBubble own';
         textElement.textContent = messageText;
 
         messageArea.appendChild(messageElement);
@@ -170,7 +174,7 @@
             <tr>
                 <td>
                     <button type="Submit" id="conBtn" onclick="connect()" class="btn" >Connect </button>
-                    <button type="Submit" id="prfBtn"  onclick="location.href='/admin/profile'" class="btn" >Profile </button>
+                    <button type="Submit" id="prfBtn"  onclick="location.href='/profile'" class="btn" >Profile </button>
                 </td>
             </tr>
         </table>
@@ -182,7 +186,7 @@
         </div>
         <#list history as message>
             <script>
-                printHistory("${message['author'].name}", "${message.text}", "${message.date}");
+                printHistory("${message['author'].username}", "${message.text}");
             </script>
         </#list>
         <br/>

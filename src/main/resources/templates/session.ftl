@@ -2,7 +2,7 @@
 <@ui.header title="Session info:"/>
 <#if sessionInfo?has_content>
     <div class="container" style="text-align: center;">
-        <form action="/admin/panel/films/${sessionInfo.movie.id}/chat" method="get">
+        <form action="/films/${sessionInfo.movie.id}/chat" method="get">
             <div class="container">
                 <button style="width: 350px" type="submit" class="btn">Go to ${sessionInfo.movie.title} chat!</button>
             </div>
