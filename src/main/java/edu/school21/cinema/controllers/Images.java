@@ -3,7 +3,6 @@ package edu.school21.cinema.controllers;
 import edu.school21.cinema.models.Image;
 import edu.school21.cinema.models.ImageType;
 import edu.school21.cinema.services.PosterService;
-import javafx.geometry.Pos;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;

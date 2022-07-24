@@ -1,7 +1,6 @@
 package edu.school21.cinema.repositories;
 
 import edu.school21.cinema.models.CinemaUser;
-import edu.school21.cinema.models.Image;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

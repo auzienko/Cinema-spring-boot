@@ -1,9 +1,7 @@
 package edu.school21.cinema.repositories;
 
-import edu.school21.cinema.models.CinemaUser;
 import edu.school21.cinema.models.Message;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 

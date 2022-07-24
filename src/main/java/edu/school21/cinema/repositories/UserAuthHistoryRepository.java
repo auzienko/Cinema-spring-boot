@@ -1,6 +1,5 @@
 package edu.school21.cinema.repositories;
 
-import edu.school21.cinema.models.Session;
 import edu.school21.cinema.models.UserAuthHistory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

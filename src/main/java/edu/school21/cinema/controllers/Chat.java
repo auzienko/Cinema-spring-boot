@@ -1,7 +1,6 @@
 package edu.school21.cinema.controllers;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import edu.school21.cinema.models.Message;
 import edu.school21.cinema.services.CinemaUserService;
 import edu.school21.cinema.services.MessageService;
