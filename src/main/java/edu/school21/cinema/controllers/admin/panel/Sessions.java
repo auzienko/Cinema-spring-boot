@@ -1,9 +1,9 @@
 package edu.school21.cinema.controllers.admin.panel;
 
-import edu.school21.cinema.models.Session;
 import edu.school21.cinema.models.CinemaUser;
 import edu.school21.cinema.models.Movie;
 import edu.school21.cinema.models.MovieHall;
+import edu.school21.cinema.models.Session;
 import edu.school21.cinema.services.CinemaUserService;
 import edu.school21.cinema.services.MovieHallService;
 import edu.school21.cinema.services.MovieService;
@@ -14,8 +14,12 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
