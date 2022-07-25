@@ -13,7 +13,6 @@ public class CinemaUserPasswordValidator implements ConstraintValidator<ValidPas
 
     @Override
     public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
-        System.out.println(s.matches(PATTERN) + " " + s);
         return s.matches(PATTERN);
     }
 }

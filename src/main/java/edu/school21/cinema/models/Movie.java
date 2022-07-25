@@ -1,6 +1,7 @@
 package edu.school21.cinema.models;
 
 import lombok.*;
+
 import javax.persistence.*;
 
 @Getter

@@ -14,7 +14,6 @@ public class CinemaAuthenticationFailureHandler implements AuthenticationFailure
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        System.out.println("Login problem: " + exception.getMessage());
         request.getRequestDispatcher("/signIn?error=true").forward(request, response);
     }
 }

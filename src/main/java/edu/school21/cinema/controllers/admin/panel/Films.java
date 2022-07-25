@@ -2,9 +2,9 @@ package edu.school21.cinema.controllers.admin.panel;
 
 
 import edu.school21.cinema.models.CinemaUser;
+import edu.school21.cinema.models.Image;
 import edu.school21.cinema.models.ImageType;
 import edu.school21.cinema.models.Movie;
-import edu.school21.cinema.models.Image;
 import edu.school21.cinema.services.CinemaUserService;
 import edu.school21.cinema.services.MovieService;
 import lombok.AllArgsConstructor;
@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
