@@ -38,4 +38,6 @@ public class Message extends BaseEntity {
     @JoinColumn(name = "film_id", referencedColumnName = "id")
     private Movie movie;
 
+    @Column(name = "avatar_UUID")
+    private String UUID;
 }

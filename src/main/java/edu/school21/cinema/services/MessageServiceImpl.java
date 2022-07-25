@@ -33,6 +33,6 @@ public class MessageServiceImpl implements MessageService{
 
     @Override
     public List<Message> getHistory(Long filmId) {
-        return messageRepository.getFirst20ByMovie_Id( filmId);
+        return messageRepository.getFirst20ByMovie_IdOrderByIdDesc( filmId);
     }
 }

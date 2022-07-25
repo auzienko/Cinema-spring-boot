@@ -1,5 +1,6 @@
 package edu.school21.cinema.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import edu.school21.cinema.annotations.ValidPassword;
 import lombok.*;
 
@@ -12,6 +13,7 @@ import javax.validation.constraints.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@JsonIgnoreProperties({ "password", "avatar" })
 @Table(schema = "cinema", name = "cinema_users")
 public class CinemaUser extends BaseEntity {
     @Column(name = "username")
@@ -34,6 +36,4 @@ public class CinemaUser extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "avatar_id", referencedColumnName = "id")
     private Image avatar;
-
-
 }

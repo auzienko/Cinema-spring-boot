@@ -84,6 +84,7 @@
         if (connected){
             document.getElementById('conBtn').style.visibility = 'hidden'
             document.getElementById('snd').style.visibility = 'visible'
+            document.getElementById('chatDiv').style.visibility = 'visible'
         }else{
             document.getElementById('conBtn').style.visibility = 'visible'
         }
@@ -105,7 +106,16 @@
         });
     }
 
+    function checkForEnterKey(){
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("sendMessage").click();
+        }
+    }
+
     function send() {
+        if (document.getElementById('chatMsg').value.length < 1)
+            return;
         var message = {
             sender: "${user.username}",
             text: document.getElementById('chatMsg').value,
@@ -122,42 +132,64 @@
         messageElement.className = 'bubbleWrapper';
 
         var container = document.createElement('div');
-        container.className = (message.author.name === "${user.username}") ? 'inlineContainer own' : 'inlineContainer';
+        container.className = (message.author.username === "${user.username}") ? 'inlineContainer own' : 'inlineContainer';
 
-        var usernameText = document.createElement('label');
-        usernameText.textContent = message.author.name;
-        if (message.author.name === "${user.username}")
+        var usernameText = document.createElement('div');
+        usernameText.textContent = message.author.username;
+        usernameText.style.color = "#d5a037"
+        if (message.author.username === "${user.username}")
             usernameText.hidden = true;
 
+        var UUID = message.uuid;
+        var img = new Image();
+        img.style.borderRadius = "50%"
+        img.src =  message.uuid === null ? "https://html-online.com/editor/images/html-editor.png" : "../../images/" + UUID;
+        img.style.height = '50px';
+        img.style.width = '50px';
+        if (message.author.username === "${user.username}")
+            img.hidden = true;
+
         var textElement = document.createElement('div');
-        textElement.className = (message.author.name === "${user.username}") ? 'ownBubble own' : 'otherBubble other';
-        textElement.textContent = message.text;
+        textElement.className = (message.author.username === "${user.username}") ? 'ownBubble own' : 'otherBubble other';
+        textElement.textContent += message.text;
 
         messageArea.appendChild(messageElement);
         messageElement.appendChild(container);
-        container.appendChild(usernameText);
+        container.appendChild(img);
         container.appendChild(textElement);
+        textElement.insertBefore(usernameText, textElement.firstChild)
     }
 
     function printHistory(messageSender, messageText) {
         var messageElement = document.createElement('div');
         messageElement.className = 'bubbleWrapper';
         var container = document.createElement('div');
-        container.className = (messageSender === "${user.username}") ? 'inlineContainer' : 'inlineContainer own';
+        container.className = (messageSender === "${user.username}") ? 'inlineContainer own' : 'inlineContainer';
 
-        var usernameText = document.createElement('label');
+        var usernameText = document.createElement('div');
         usernameText.textContent = messageSender;
+        usernameText.style.color = "#d5a037"
         if (messageSender === "${user.username}")
             usernameText.hidden = true;
 
+        var UUID = "https://html-online.com/editor/images/html-editor.png"
+        var img = new Image();
+        img.src = UUID;
+        img.style.height = '50px';
+        img.style.width = '50px';
+        if (messageSender === "${user.username}")
+            img.hidden = true;
+
         var textElement = document.createElement('div');
-        textElement.className = (messageSender === "${user.username}") ? 'otherBubble other' : 'ownBubble own';
+        textElement.className = (messageSender === "${user.username}") ? 'ownBubble own' : 'otherBubble other';
         textElement.textContent = messageText;
 
         messageArea.appendChild(messageElement);
         messageElement.appendChild(container);
-        container.appendChild(usernameText);
+        container.appendChild(img);
         container.appendChild(textElement);
+        textElement.insertBefore(usernameText, textElement.firstChild)
+
     }
 
 
@@ -180,7 +212,7 @@
         </table>
     </div>
 
-    <div id="chatDiv" style="display:flex;flex-direction: column;justify-content: center; align-items: center; padding: 10px; margin: 10px;">
+    <div id="chatDiv" style="display:flex;flex-direction: column;justify-content: center; align-items: center; padding: 10px; margin: 10px; visibility: hidden">
         <div id="chat-page" class="chat">
             <div id="messageArea" class="innerChat"></div>
         </div>
@@ -191,7 +223,7 @@
         </#list>
         <br/>
         <div id="snd" style="display:flex;flex-direction: column;justify-content: center; align-items: center; padding: 10px; margin: 10px; visibility: hidden">
-            <input type="text" id="chatMsg" placeholder="Write message"/>
+            <input type="text" id="chatMsg" onkeyup="checkForEnterKey(this.value)" placeholder="Write message" required/>
             <button id="sendMessage" onclick="send();">Send</button>
         </div>
         <br/>

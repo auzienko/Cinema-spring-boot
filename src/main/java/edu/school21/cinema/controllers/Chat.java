@@ -1,7 +1,7 @@
 package edu.school21.cinema.controllers;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import edu.school21.cinema.models.CinemaUser;
 import edu.school21.cinema.models.Message;
 import edu.school21.cinema.services.CinemaUserService;
 import edu.school21.cinema.services.MessageService;
@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 @AllArgsConstructor
@@ -38,6 +39,7 @@ public class Chat {
         chatMVC.addObject("movie",  movieService.get(id).get());
         chatMVC.addObject("user", cinemaUserService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).get());
         List<Message> hist = messageService.getHistory(id);
+        Collections.reverse(hist);
         chatMVC.addObject("history", hist);
         return chatMVC;
     }
@@ -46,7 +48,10 @@ public class Chat {
     @SendTo("/films")
     public Message send(@DestinationVariable("id") Long id, String json, @Payload Message message) {
         JSONObject obj = new JSONObject(json);
-        message.setAuthor(cinemaUserService.findByEmail(obj.getString("email")).get());
+        CinemaUser sender = cinemaUserService.findByEmail(obj.getString("email")).get();
+        message.setAuthor(sender);
+        if (sender.getAvatar() != null)
+            message.setUUID(sender.getAvatar().getFileNameUUID().toString());
         message.setMovie(movieService.get(obj.getLong("film_id")).get());
         messageService.add(message);
         return message;

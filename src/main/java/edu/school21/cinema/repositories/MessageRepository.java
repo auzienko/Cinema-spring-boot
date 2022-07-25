@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface MessageRepository extends JpaRepository<Message, Long> {
 
-    List<Message> getFirst20ByMovie_Id(Long movieId);
+    List<Message> getFirst20ByMovie_IdOrderByIdDesc(Long movieId);
 }

@@ -66,7 +66,8 @@ create table if not exists cinema.messages
     text            varchar,
     date            timestamp,
     author_id       bigint references cinema.cinema_users(id),
-    film_id         bigint references cinema.movies(id)
+    film_id         bigint references cinema.movies(id),
+    avatar_UUID     VARCHAR
 );
 
 create table if not exists  cinema.user_auth_history
