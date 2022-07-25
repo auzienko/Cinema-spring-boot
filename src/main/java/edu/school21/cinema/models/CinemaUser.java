@@ -5,7 +5,8 @@ import edu.school21.cinema.annotations.ValidPassword;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Getter
@@ -25,6 +26,7 @@ public class CinemaUser extends BaseEntity {
     private String password;
 
     @Column(name = "email")
+    @Email(message = "{validation.username.email}")
     private String email;
 
     @Column(name = "role")
