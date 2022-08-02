@@ -67,10 +67,6 @@ public class CinemaUserServiceImpl implements CinemaUserService {
 
     @Override
     public Optional<CinemaUser> findByEmail(String email) {
-        Optional<CinemaUser> user = userRepository.findByEmailIgnoreCase(email);
-        if (!user.isPresent()) {
-            return Optional.empty();
-        }
-        return user;
+        return userRepository.findByEmailIgnoreCase(email);
     }
 }

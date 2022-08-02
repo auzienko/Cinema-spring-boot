@@ -163,6 +163,7 @@
     function printHistory(messageSender, messageText) {
         var messageElement = document.createElement('div');
         messageElement.className = 'bubbleWrapper';
+
         var container = document.createElement('div');
         container.className = (messageSender === "${user.username}") ? 'inlineContainer own' : 'inlineContainer';
 
@@ -189,7 +190,6 @@
         container.appendChild(img);
         container.appendChild(textElement);
         textElement.insertBefore(usernameText, textElement.firstChild)
-
     }
 
 
