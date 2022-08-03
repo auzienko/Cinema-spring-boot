@@ -1,14 +1,12 @@
 package edu.school21.cinema.controllers;
 
 import edu.school21.cinema.models.CinemaUser;
-import edu.school21.cinema.models.UserAuthHistory;
 import edu.school21.cinema.models.UserStatus;
 import edu.school21.cinema.services.CinemaUserService;
 import edu.school21.cinema.services.CinemaUserServiceImpl;
 import edu.school21.cinema.services.UserAuthHistoryService;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Controller
@@ -26,12 +23,10 @@ import java.util.Optional;
 public class SignIn {
     private final CinemaUserServiceImpl cinemaUserService;
     private final MessageSource messageSource;
-    private final UserAuthHistoryService userAuthHistoryService;
 
     public SignIn(CinemaUserServiceImpl cinemaUserService, MessageSource messageSource, UserAuthHistoryService userAuthHistoryService) {
         this.cinemaUserService = cinemaUserService;
         this.messageSource = messageSource;
-        this.userAuthHistoryService = userAuthHistoryService;
     }
 
     @GetMapping

@@ -22,17 +22,17 @@
                         <form action="profile?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data"
                               method="post">
                             <input type="file" name="avatarFile" class="btn" accept="image/*" required>
-                            <button type="submit" class="btn">Upload</button>
+                            <button type="submit" class="btn"><@spring.message 'profile.upload'/></button>
                         </form>
                         <form action="/sessions" method="get">
                             <div class="container">
-                                <button style="width: 350px" type="submit" class="btn" >Find session</button>
+                                <button style="width: 350px" type="submit" class="btn" ><@spring.message 'profile.findSess'/></button>
                             </div>
                         </form>
                         <#if user.role = "ADMIN">
                             <form action="/admin/panel" method="get">
                                 <div class="container">
-                                    <button style="width: 350px" type="submit" class="btn" >Admin panel</button>
+                                    <button style="width: 350px" type="submit" class="btn" ><@spring.message 'profile.adminPanel'/></button>
                                 </div>
                             </form>
                         </#if>
@@ -59,9 +59,9 @@
                                 <div class="container">
                                     <table class="minimalistBlack">
                                         <thead>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                        <th>IP</th>
+                                        <th><@spring.message 'profile.date'/></th>
+                                        <th><@spring.message 'profile.time'/></th>
+                                        <th><@spring.message 'profile.ip'/></th>
                                         </thead>
                                         <#list authHistory as row>
                                             <tr>
@@ -88,9 +88,9 @@
         <div class="container">
             <table class="minimalistBlack">
                 <thead>
-                <th>File</th>
-                <th>Size</th>
-                <th>Mime</th>
+                <th><@spring.message 'profile.file'/></th>
+                <th><@spring.message 'profile.size'/></th>
+                <th><@spring.message 'profile.mime'/></th>
                 </thead>
                 <#list avatarHistory as row>
                     <tr>
