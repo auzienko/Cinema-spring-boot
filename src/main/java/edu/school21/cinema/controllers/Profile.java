@@ -44,6 +44,9 @@ public class Profile {
     public ModelAndView getPage(HttpServletRequest req) {
         ModelAndView modelAndView = new ModelAndView(PAGE_PATH);
         Optional<CinemaUser> user = cinemaUserService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+
+        System.out.println("My IP (profile) is: " + req.getRemoteAddr());
+
         if (!user.isPresent()) {
             modelAndView.setViewName("redirect: /");
             return modelAndView;
