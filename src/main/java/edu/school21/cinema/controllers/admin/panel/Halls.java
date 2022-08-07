@@ -1,6 +1,5 @@
 package edu.school21.cinema.controllers.admin.panel;
 
-//import edu.school21.cinema.models.Administrator;
 
 import edu.school21.cinema.models.CinemaUser;
 import edu.school21.cinema.models.MovieHall;

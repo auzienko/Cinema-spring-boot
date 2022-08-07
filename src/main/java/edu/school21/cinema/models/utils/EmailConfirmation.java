@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "email_confirmations")
+@Table(schema = "cinema", name = "email_confirmations")
 public class EmailConfirmation extends BaseEntity {
     @Column(name = "token")
     String token;
