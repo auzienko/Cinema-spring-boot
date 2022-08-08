@@ -29,6 +29,11 @@ public class CinemaUser extends BaseEntity {
     @Email(message = "{validation.username.email}")
     private String email;
 
+
+    @Column(name = "phoneNum")
+    @NotEmpty(message = "{validation.phoneNum.notEmpty}")
+    private String phoneNum;
+
     @Column(name = "role")
     private Role role;
 

@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS cinema.cinema_users
     id               BIGSERIAL PRIMARY KEY,
     username         VARCHAR,
     email            VARCHAR,
+    phone_num         VARCHAR,
     password         VARCHAR,
     role             INTEGER,
     status           INTEGER,
