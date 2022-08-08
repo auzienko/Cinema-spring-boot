@@ -26,10 +26,10 @@ public class Movie extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "poster_id", referencedColumnName = "id")
-    private Poster poster;
+    private Image image;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "administrator_id", referencedColumnName = "id")
-    private Administrator administrator;
+    private CinemaUser administrator;
 
 }

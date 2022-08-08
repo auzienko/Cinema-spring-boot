@@ -1,12 +1,15 @@
 package edu.school21.cinema.controllers.admin.panel;
 
-import edu.school21.cinema.models.Administrator;
+
+import edu.school21.cinema.models.CinemaUser;
+import edu.school21.cinema.models.Image;
+import edu.school21.cinema.models.ImageType;
 import edu.school21.cinema.models.Movie;
-import edu.school21.cinema.models.Poster;
-import edu.school21.cinema.services.AdministratorService;
+import edu.school21.cinema.services.CinemaUserService;
 import edu.school21.cinema.services.MovieService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.core.env.Environment;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,26 +20,30 @@ import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
+@AllArgsConstructor
 @Controller("adminPanelFilms")
 @RequestMapping("/admin/panel/films")
 public class Films {
     private final String PAGE_PATH = "/admin/panel/films";
     private MovieService movieService;
+    private CinemaUserService cinemaUserService;
     private Environment env;
 
-    @Autowired
-    public Films(MovieService movieService, Environment env) {
-        this.movieService = movieService;
-        this.env = env;
-    }
+//    @Autowired
+//    public Films(MovieService movieService, Environment env, CinemaUserService cinemaUserService) {
+//        this.movieService = movieService;
+//        this.env = env;
+//        this.cinemaUserService = cinemaUserService;
+//    }
 
     @GetMapping
-    public ModelAndView getPage(HttpServletRequest req) {
+    public ModelAndView getPage (HttpServletRequest req) {
         ModelAndView modelAndView = new ModelAndView(PAGE_PATH);
-        Administrator administrator = AdministratorService.getFromSession(req.getSession());
-        List<Movie> movieList = movieService.getAllByAdministratorId(administrator.getId());
+        Optional<CinemaUser> administrator = cinemaUserService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        List<Movie> movieList = movieService.getAllByAdministratorId(administrator.get().getId());
         if (movieList.size() > 0) {
             modelAndView.addObject("movieList", movieList);
         }
@@ -44,21 +51,19 @@ public class Films {
     }
 
     @PostMapping()
-    public ModelAndView postPage(HttpServletRequest req,
-                                 @RequestParam("posterFile") MultipartFile posterFile,
-                                 @RequestParam("title") String title,
-                                 @RequestParam("description") String description,
-                                 @RequestParam("yearOfRelease") String yearOfRelease,
-                                 @RequestParam("ageRestrictions") String ageRestrictions) {
+    public ModelAndView postPage( HttpServletRequest req,
+                                 @ModelAttribute("Movie") Movie inputData,
+                                 @RequestParam("posterFile") MultipartFile posterFile
+    ){
         ModelAndView modelAndView = new ModelAndView(PAGE_PATH);
 
-        Administrator administrator = AdministratorService.getFromSession(req.getSession());
-        if (title == null) {
+        Optional<CinemaUser> administrator = cinemaUserService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        if (inputData.getTitle() == null) {
             modelAndView.addObject("error", "❌ Title can't be empty!");
             return modelAndView;
         }
 
-        if (description == null) {
+        if (inputData.getDescription() == null) {
             modelAndView.addObject("error", "❌ Description can't be empty!");
             return modelAndView;
         }
@@ -85,9 +90,9 @@ public class Films {
             modelAndView.addObject("error", "❌ Can't save poster!");
             return modelAndView;
         }
-        Poster poster = new Poster(posterFile.getOriginalFilename(),
-                uuid, posterFile.getSize(), posterFile.getContentType(), administrator);
-        Movie movie = new Movie(title, yOF, aR, description, poster, administrator);
+        Image image = new Image(posterFile.getOriginalFilename(),
+                uuid, ImageType.POSTER,  posterFile.getSize(),  posterFile.getContentType(), administrator.get());
+        Movie movie = new Movie(inputData.getTitle(), yOF, aR, inputData.getDescription(), image, administrator.get());
         movieService.add(movie);
         modelAndView.setViewName("redirect:" + PAGE_PATH);
         return modelAndView;

@@ -1,30 +1,35 @@
-<#ftl encoding="utf-8">
+<#import "/spring.ftl" as spring />
 <#import "../../ui.ftl" as ui/>
-<@ui.header title="🎞 Films panel"/>
+<#assign titletext><@spring.message 'films.title'/></#assign>
+<@ui.headerWithjQuery title="🎞  ${titletext}"/>
 <#if error?has_content>
     <h1 style="text-align: center"><b>${error}</b></h1>
 </#if>
-<form method="post" action="films" enctype="multipart/form-data" accept-charset="utf-8">
+<style>
+
+</style>
+
+<form method="post" action="films?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data" accept-charset="utf-8">
     <div class="container">
-        <table>
+        <table class="minimalistBlack" style="background-color: thistle">
             <tr>
-                <input name="posterFile" placeholder="Upload poster image" type="file" accept="image/*"
+                <input class="inp" name="posterFile" placeholder="Upload image image" type="file" accept="image/*"
                        required/></td>
             </tr>
             <tr>
-                <td><input name="title" placeholder="Enter title" type="text" required/></td>
+                <td><input class="inp"  name="title" placeholder="Enter title" type="text" style="width: 400px;" required/></td>
 
             </tr>
             <tr>
 
-                <td><input name="description" placeholder="Enter description" type="text" required/></td>
+                <td><input  class="inp" name="description" placeholder="Enter description" type="text" style="width: 400px;" required/></td>
             </tr>
             <tr>
-                <td><input name="yearOfRelease" placeholder="Enter age year of release" type="text"
+                <td><input class="inp"  name="yearOfRelease" placeholder="Enter age year of release" type="text" style="width: 400px;"
                            required/>
             </tr>
             <tr>
-                <td><input name="ageRestrictions" placeholder="Enter age restrictions" type="text"
+                <td><input class="inp"  name="ageRestrictions" placeholder="Enter age restrictions" type="text" style="width: 400px;"
                            required/></td>
             </tr>
             <tr>
@@ -51,7 +56,7 @@
                 <tr>
                     <td>${row.id}</td>
                     <td>
-                        <img src="../../images/${row.poster.fileNameUUID}" width="150" />
+                        <img src="../../../images/${row.image.fileNameUUID}" width="150" />
                     </td>
                     <td>${row.title}</td>
                     <td>${row.description}</td>
@@ -61,5 +66,7 @@
             </#list>
         </table>
     </div>
+
 </#if>
+<@ui.langchoiser/>
 <@ui.tail/>

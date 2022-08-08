@@ -2,6 +2,7 @@ package edu.school21.cinema.security;
 
 import edu.school21.cinema.models.CinemaUser;
 import edu.school21.cinema.models.UserStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +13,7 @@ import java.util.Collection;
 public class CinemaUserPrincipal implements UserDetails {
     private final CinemaUser user;
 
+    @Autowired
     public CinemaUserPrincipal(CinemaUser user) {
         this.user = user;
     }

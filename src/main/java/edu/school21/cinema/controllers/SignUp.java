@@ -2,7 +2,9 @@ package edu.school21.cinema.controllers;
 
 import edu.school21.cinema.listeners.OnRegistrationCompleteEvent;
 import edu.school21.cinema.models.CinemaUser;
+import edu.school21.cinema.models.UserAuthHistory;
 import edu.school21.cinema.services.CinemaUserService;
+import edu.school21.cinema.services.UserAuthHistoryService;
 import edu.school21.cinema.services.utils.EmailService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Controller
@@ -30,11 +33,17 @@ public class SignUp {
     private final CinemaUserService cinemaUserService;
     private final ApplicationEventPublisher eventPublisher;
     private final MessageSource messageSource;
+    private final UserAuthHistoryService userAuthHistoryService;
 
-    public SignUp(CinemaUserService cinemaUserService, EmailService emailService, ApplicationEventPublisher eventPublisher, MessageSource messageSource) {
+    public SignUp(CinemaUserService cinemaUserService,
+                  EmailService emailService,
+                  ApplicationEventPublisher eventPublisher,
+                  MessageSource messageSource,
+                  UserAuthHistoryService userAuthHistoryService) {
         this.cinemaUserService = cinemaUserService;
         this.eventPublisher = eventPublisher;
         this.messageSource = messageSource;
+        this.userAuthHistoryService = userAuthHistoryService;
     }
 
     @GetMapping
@@ -58,6 +67,7 @@ public class SignUp {
                     .replacePath(null)
                     .build()
                     .toUriString();
+            userAuthHistoryService.save(new UserAuthHistory(LocalDateTime.now(), request.getRemoteAddr(), cinemaUser.get()));
             if (sendMail) {
                 eventPublisher.publishEvent(new OnRegistrationCompleteEvent(cinemaUser.get(),
                         LocaleContextHolder.getLocale(), baseUrl + "/confirm/"));

@@ -11,5 +11,6 @@ public interface CinemaUserRepository extends JpaRepository<CinemaUser, Long> {
     CinemaUser findByUsername(String username);
     CinemaUser findByEmail(String email);
 
+
     Optional<CinemaUser> findByEmailIgnoreCase(String email);
 }

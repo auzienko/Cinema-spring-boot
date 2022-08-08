@@ -46,6 +46,8 @@ public class CinemaUserServiceImpl implements CinemaUserService {
         return Optional.empty();
     }
 
+
+
     @Override
     public Optional<CinemaUser> signIn(String email, String password) {
         Optional<CinemaUser> tmp = userRepository.findByEmailIgnoreCase(email);
@@ -61,5 +63,10 @@ public class CinemaUserServiceImpl implements CinemaUserService {
     public Optional<CinemaUser> save(CinemaUser entity) {
         CinemaUser user = userRepository.save(entity);
         return Optional.of(user);
+    }
+
+    @Override
+    public Optional<CinemaUser> findByEmail(String email) {
+        return userRepository.findByEmailIgnoreCase(email);
     }
 }

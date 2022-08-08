@@ -20,5 +20,5 @@ public class MovieHall extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "administrator_id", referencedColumnName = "id")
-    private Administrator administrator;
+    private CinemaUser administrator;
 }

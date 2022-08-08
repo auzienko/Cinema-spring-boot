@@ -1,12 +1,12 @@
 package edu.school21.cinema.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import edu.school21.cinema.annotations.ValidPassword;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.validation.constraints.*;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Getter
@@ -14,6 +14,7 @@ import javax.validation.constraints.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@JsonIgnoreProperties({ "password", "avatar" })
 @Table(schema = "cinema", name = "cinema_users")
 public class CinemaUser extends BaseEntity {
     @Column(name = "username")
@@ -25,6 +26,7 @@ public class CinemaUser extends BaseEntity {
     private String password;
 
     @Column(name = "email")
+    @Email(message = "{validation.username.email}")
     private String email;
 
     @Column(name = "role")
@@ -32,4 +34,8 @@ public class CinemaUser extends BaseEntity {
 
     @Column(name = "status")
     private UserStatus status;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "avatar_id", referencedColumnName = "id")
+    private Image avatar;
 }
