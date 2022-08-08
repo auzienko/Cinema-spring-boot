@@ -39,6 +39,7 @@ public class CinemaUserServiceImpl implements CinemaUserService {
             entity.setPassword(bCryptEncoder.encode(entity.getPassword()));
             entity.setRole(Role.USER);
             entity.setStatus(UserStatus.NOT_CONFIRMED);
+            entity.setPhoneNum(entity.getPhoneNum());
             userRepository.save(entity);
             tmp = userRepository.findByEmailIgnoreCase(entity.getEmail());
             return tmp;

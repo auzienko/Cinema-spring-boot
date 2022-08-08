@@ -28,6 +28,15 @@
             </tr>
             <tr>
                 <td>
+                    <@spring.bind 'userForm.phoneNum'/>
+                    <#if spring.status.errorMessages?has_content>
+                        <span class="error">${spring.status.errorMessages?first}</span>
+                    </#if>
+                    <input class="full-size" value="${spring.stringStatusValue}" type="tel" id="phone" name="${spring.status.expression}" placeholder="<@spring.message 'signup.phone'/> +7(777)777777" pattern="\+\d\((\d){3}\)(\d){3}(\d){2}(\d){2}" required>
+                </td>
+            </tr>
+            <tr>
+                <td>
                     <@spring.bind 'userForm.password'/>
                     <#if spring.status.errorMessages?has_content>
                         <span class="error">${spring.status.errorMessages?first}</span>
@@ -49,3 +58,5 @@
 </#if>
 <@ui.langchoiser/>
 <@ui.tail/>
+
+

@@ -49,6 +49,7 @@
                     <td style="width: 100%;">
                         <h1>${user.username}</h1>
                         <p>${user.email}</p>
+                        <p>${user.phoneNum}</p>
                     </td>
                 </tr>
                 <tr>
