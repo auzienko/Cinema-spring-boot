@@ -175,7 +175,7 @@
 
         var img = new Image();
         img.style.borderRadius = "50%"
-        img.src = messageUUID === null ? "https://html-online.com/editor/images/html-editor.png" : "../../images/" + messageUUID;
+        img.src = messageUUID === "null" ? "https://html-online.com/editor/images/html-editor.png" : "../../images/" + messageUUID;
         img.style.height = '50px';
         img.style.width = '50px';
         if (messageSender === "${user.username}")
@@ -217,7 +217,7 @@
         </div>
         <#list history as message>
             <script>
-                printHistory("${message['author'].username}", "${message.text}", "${message.UUID}");
+                printHistory("${message['author'].username}", "${message.text}", "${(message.UUID)!"null"}");
             </script>
         </#list>
         <br/>

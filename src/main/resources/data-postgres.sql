@@ -1,5 +1,5 @@
-INSERT INTO cinema.cinema_users (id, username, email, phone_num, password, role, status, avatar_id) VALUES (1, 'Pupa', 'mail@mail.com', '888', '$2a$10$F/RCQRsr3z.LNCfrwr/GSek1qhC.XCGxhlqtoZOdrEbnDa2CDoxu.', 1, 0, null);
-INSERT INTO cinema.cinema_users (id, username, email, phone_num, password, role, status, avatar_id) VALUES (2, 'Lupa', 'foo@bar.com', '1234567890', '$2a$10$F/RCQRsr3z.LNCfrwr/GSek1qhC.XCGxhlqtoZOdrEbnDa2CDoxu.', 0, 0, null);
+INSERT INTO cinema.cinema_users ( username, email, phone_num, password, role, status, avatar_id) VALUES ( 'Pupa', 'mail@mail.com', '888', '$2a$10$F/RCQRsr3z.LNCfrwr/GSek1qhC.XCGxhlqtoZOdrEbnDa2CDoxu.', 1, 0, null);
+INSERT INTO cinema.cinema_users (username, email, phone_num, password, role, status, avatar_id) VALUES ( 'Lupa', 'foo@bar.com', '1234567890', '$2a$10$F/RCQRsr3z.LNCfrwr/GSek1qhC.XCGxhlqtoZOdrEbnDa2CDoxu.', 0, 0, null);
 
 
 
